@@ -1055,8 +1055,27 @@ class RNodeInterface(Interface):
         except:
             self.bitrate = 0
 
+    def is_reticulum_packet(data):
+        try:
+            packet = Packet.unpack(data)
+            return packet is not None
+        except:
+            return False
+
     def process_incoming(self, data):
         self.rxb += len(data)
+
+        """
+        if is_reticulum_packet(data):
+            interface.rxb_valid += len(data)
+        else:
+            interface.rxb_invalid += len(data)
+
+        if valid_reticulum_packet:
+            self.rxb_valid += len(data)
+        else:
+            self.rxb_invalid += len(data)
+        """
 
         def af():
             self.owner.inbound(data, self)

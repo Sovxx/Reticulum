@@ -1312,8 +1312,15 @@ class Transport:
         
         packet = RNS.Packet(None, raw)
         if not packet.unpack():
+            if interface:
+                print("inval")
+                interface.rxb_invalid += len(raw)
             Transport.jobs_locked = False
             return
+        
+        if interface:
+            print("val")
+            interface.rxb_valid += len(raw)
             
         packet.receiving_interface = interface
         packet.hops += 1

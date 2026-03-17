@@ -1235,6 +1235,8 @@ class Reticulum:
                 ifstats["hash"] = interface.get_hash()
                 ifstats["type"] = str(type(interface).__name__)
                 ifstats["rxb"] = interface.rxb
+                ifstats["rxb_valid"] = interface.rxb_valid
+                ifstats["rxb_invalid"] = interface.rxb_invalid
                 ifstats["txb"] = interface.txb
                 ifstats["incoming_announce_frequency"] = interface.incoming_announce_frequency()
                 ifstats["outgoing_announce_frequency"] = interface.outgoing_announce_frequency()

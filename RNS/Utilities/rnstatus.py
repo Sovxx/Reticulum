@@ -552,6 +552,10 @@ def program_setup(configdir, dispall=False, verbosity=0, name_filter=None, json=
                             rxstat += "  "+RNS.prettyspeed(ifstat["rxs"])
                             txstat += "  "+RNS.prettyspeed(ifstat["txs"])
                       
+                        #print(ifstat)
+                        rxstat += " ↓valid " + RNS.prettysize(ifstat.get("rxb_valid", 0))
+                        rxstat += " ↓invalid " + RNS.prettysize(ifstat.get("rxb_invalid", 0))
+
                         print(f"    Traffic   : {txstat}\n                {rxstat}")
 
         lstr = ""

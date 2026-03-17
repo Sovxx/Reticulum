@@ -77,6 +77,8 @@ class Interface:
 
     def __init__(self):
         self.rxb      = 0
+        self.rxb_valid = 0
+        self.rxb_invalid = 0
         self.txb      = 0
         self.created  = time.time()
         self.detached = False
