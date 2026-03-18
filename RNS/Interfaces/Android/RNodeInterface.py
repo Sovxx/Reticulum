@@ -1068,13 +1068,40 @@ class RNodeInterface(Interface):
     def process_incoming(self, data):
         self.rxb += len(data)
 
+        import time, os, RNS
         log_path = os.path.expanduser("~/data_rnode.log")
 
         try:
-            with open(log_path, "ab") as f:
-                timestamp = time.strftime("%Y-%m-%d %H:%M:%S").encode()
-                f.write(timestamp + b" | " + data + b"\n")
-        except Exception as e:
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+
+            packet = RNS.Packet(None, data)
+            valid = packet.unpack()
+
+            if valid:
+                try:
+                    info = (
+                        f"type={packet.packet_type} "
+                        f"hops={packet.hops} "
+                        f"dest={packet.destination_hash.hex()}"
+                    )
+                except:
+                    info = "parsed_but_partial"
+
+                # tentative payload
+                try:
+                    payload = packet.data.hex()
+                except:
+                    payload = "no_payload"
+
+                line = f"{timestamp} [RNS] {len(data)}B {info} payload={payload}\n"
+
+            else:
+                line = f"{timestamp} [UNKNOWN] {len(data)}B raw={data.hex()}\n"
+
+            with open(log_path, "a") as f:
+                f.write(line)
+
+        except Exception:
             pass
 
         """
