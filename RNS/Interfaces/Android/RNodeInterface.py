@@ -1062,8 +1062,20 @@ class RNodeInterface(Interface):
         except:
             return False
 
+    import time
+    import os
+
     def process_incoming(self, data):
         self.rxb += len(data)
+
+        log_path = os.path.expanduser("~/data_rnode.log")
+
+        try:
+            with open(log_path, "ab") as f:
+                timestamp = time.strftime("%Y-%m-%d %H:%M:%S").encode()
+                f.write(timestamp + b" | " + data + b"\n")
+        except Exception as e:
+            pass
 
         """
         if is_reticulum_packet(data):
