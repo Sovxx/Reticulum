@@ -380,6 +380,7 @@ class RNodeInterface(Interface):
         lt_alock = float(c["airtime_limit_long"]) if "airtime_limit_long" in c and c["airtime_limit_long"] != None else None
         port = c["port"] if "port" in c else None
 
+        print("init OK")
         self.process_incoming(0)
 
         import importlib.util
