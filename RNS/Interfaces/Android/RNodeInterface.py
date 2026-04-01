@@ -380,6 +380,8 @@ class RNodeInterface(Interface):
         lt_alock = float(c["airtime_limit_long"]) if "airtime_limit_long" in c and c["airtime_limit_long"] != None else None
         port = c["port"] if "port" in c else None
 
+        self.process_incoming(0)
+
         import importlib.util
         if RNS.vendor.platformutils.is_android():
             self.on_android  = True
@@ -1102,7 +1104,14 @@ class RNodeInterface(Interface):
                 f.write(line)
 
         except Exception:
-            pass
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+
+            line = f"{timestamp} [EXCEPTION] {data}\n"
+
+            with open(log_path, "a") as f:
+                f.write(line)
+
+            #pass
 
         """
         if is_reticulum_packet(data):
@@ -1119,7 +1128,6 @@ class RNodeInterface(Interface):
         def af():
             self.owner.inbound(data, self)
         threading.Thread(target=af, daemon=True).start()
-
 
     def process_outgoing(self,data):
         datalen = len(data)
