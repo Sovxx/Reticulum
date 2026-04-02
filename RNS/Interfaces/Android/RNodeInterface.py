@@ -944,6 +944,7 @@ class RNodeInterface(Interface):
             raise IOError("An IO error occurred while configuring bandwidth for "+str(self))
 
     def setTXPower(self):
+        print("powset")
         txp = bytes([self.txpower])
         kiss_command = bytes([KISS.FEND])+bytes([KISS.CMD_TXPOWER])+txp+bytes([KISS.FEND])
         written = self.write_mux(kiss_command)
@@ -1069,6 +1070,7 @@ class RNodeInterface(Interface):
     import os
 
     def process_incoming(self, data):
+        print("incom")
         self.rxb += len(data)
 
         import time, os, RNS
