@@ -1319,7 +1319,9 @@ class Transport:
             return
         
         if interface:
-            print("val")
+            class_name = type(self).__name__
+            print(class_name, "val")  # "RNodeInterface" si appelé depuis une instance de RNodeInterface
+            print(raw)
             interface.rxb_valid += len(raw)
             
         packet.receiving_interface = interface
