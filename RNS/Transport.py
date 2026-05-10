@@ -1323,6 +1323,8 @@ class Transport:
             if class_name == "RNodeInterface":
                 print(class_name, "val")  # "RNodeInterface" si appelé depuis une instance de RNodeInterface
                 print(raw)
+            if interface.rxb_valid == 0:
+                print("1er paquet valide")
             interface.rxb_valid += len(raw)
             
         packet.receiving_interface = interface
